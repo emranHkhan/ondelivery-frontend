@@ -1,0 +1,87 @@
+.contacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin: 50px 0;
+    width: 100%;
+}
+
+.contacts iframe {
+    border: 1px solid tomato;
+    display: block;
+    min-width: 100%;
+    height: 100%;
+}
+
+.contacts h1 {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.contacts p {
+    color: grey;
+}
+
+.contacts p {
+    font-size: 17px;
+    margin-top: 10px;
+}
+
+.contacts textarea,
+.contacts input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 0;
+    outline: 1px solid tomato;
+}
+
+.contacts h3 {
+    margin-top: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.contacts span {
+    color: tomato;
+    font-weight: 600;
+    font-size: 15px;
+    word-spacing: 5px;
+}
+
+.box {
+    margin: 20px 0;
+}
+
+.contact {
+    background-color: white;
+    color: tomato;
+    border: 1px solid tomato;
+    width: max(15vw, 200px);
+    padding: 12px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+.contact:hover {
+    background-color: tomato;
+    color: white;
+}
+
+
+@media screen and (max-width: 768px) {
+    .contacts {
+        grid-template-columns: 1fr;
+    }
+
+    .contacts iframe {
+        height: 50vh;
+    }
+
+    .contacts {
+        width: 100%;
+    }
+}

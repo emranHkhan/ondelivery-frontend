@@ -1,0 +1,109 @@
+.image-container {
+    display: block;
+    position: relative;
+    height: 20vw;
+    margin-top: 30px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.image-text {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    text-transform: capitalize;
+}
+
+.item-details {
+    display: flex;
+    gap: 100px;
+    width: 70%;
+    margin: 80px auto;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: center;
+}
+
+.item-image {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.item-name {
+    font-size: 2rem;
+}
+
+.item-rating {
+    display: flex;
+    align-items: center;
+}
+
+.item-dietary-info {
+    color: gray;
+}
+
+.item-price {
+    color: tomato;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.add-to-cart {
+    background-color: white;
+    color: tomato;
+    border: 1px solid tomato;
+    width: max(15vw, 200px);
+    padding: 12px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+.add-to-cart:hover {
+    background-color: tomato;
+    color: white;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: tomato;
+    font-size: 1.5rem;
+}
