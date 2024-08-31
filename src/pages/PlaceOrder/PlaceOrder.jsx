@@ -15,11 +15,11 @@ const PlaceOrder = () => {
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
     const [errors, setErrors] = useState({});
 
-    // useEffect(() => {
-    //     if (Object.keys(cartItems).length === 0) {
-    //         navigate('/');
-    //     }
-    // }, [cartItems, navigate]);
+    useEffect(() => {
+        if (Object.keys(cartItems).length === 0) {
+            navigate('/');
+        }
+    }, [cartItems, navigate]);
 
     const cartDetails = Object.keys(cartItems).map(id => {
         const item = foodItems.find(food => food.id === parseInt(id));
@@ -70,7 +70,7 @@ const PlaceOrder = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (!validateForm()) return;
+        if (!validateForm()) return;
 
         const address = {
             street: formData.street,
