@@ -13,6 +13,7 @@ import About from "./pages/About/About"
 import Sidebar from "./components/Sidebar/Sidebar"
 import { AuthProvider } from "./context/AuthContext"
 import { DataProvider } from "./context/DataContext"
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false)
@@ -26,6 +27,7 @@ const App = () => {
           {<Sidebar setExpand={setExpand} setShowLogin={setShowLogin} expand={expand} />}
           <div className="app">
             <Navbar setShowLogin={setShowLogin} setExpand={setExpand} />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />

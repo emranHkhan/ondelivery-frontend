@@ -1,8 +1,7 @@
 import './PlaceOrder.css';
 import useData from '../../hooks/useData';
 import useAuth from '../../hooks/useAuth';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import api from '../../utils/axiosInstance';
 import PaymentSuccess from '../../components/PaymentSuccess/PaymentSuccess';
 
@@ -11,15 +10,8 @@ const DELIVERY_FEE = 2;
 const PlaceOrder = () => {
     const { getTotalCartAmount, cartItems, foodItems, setCartItems } = useData();
     const { user } = useAuth();
-    const navigate = useNavigate();
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
     const [errors, setErrors] = useState({});
-
-    useEffect(() => {
-        if (Object.keys(cartItems).length === 0) {
-            navigate('/');
-        }
-    }, [cartItems, navigate]);
 
     const cartDetails = Object.keys(cartItems).map(id => {
         const item = foodItems.find(food => food.id === parseInt(id));
