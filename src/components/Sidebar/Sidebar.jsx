@@ -1,12 +1,32 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Sidebar.css'
+import './Sidebar.css';
 import { RiCloseLine } from "react-icons/ri";
 
 const Sidebar = ({ expand, setExpand, setShowLogin }) => {
-    return (
+    const sidebarRef = useRef(null);
 
-        <nav className={`sidebar ${expand ? 'show-sidebar' : 'hide-sidebar'}`}>
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setExpand(false);
+            }
+        };
+
+        if (expand) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [expand, setExpand]);
+
+    return (
+        <nav ref={sidebarRef} className={`sidebar ${expand ? 'show-sidebar' : 'hide-sidebar'}`}>
             <RiCloseLine className='close-btn' onClick={() => setExpand(false)} />
             <ul onClick={() => setExpand(false)}>
                 <li>
@@ -41,10 +61,10 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
                         Contact
                     </NavLink>
                 </li>
-                <li onClick={() => setShowLogin(true)}>sign in</li>
+                <li onClick={() => setShowLogin(true)}>Sign in</li>
             </ul>
         </nav>
-    )
-}
+    );
+};
 
-export default Sidebar
+export default Sidebar;
