@@ -4,9 +4,9 @@
     gap: 20px;
 }
 
-.explore-menu h1 {
-    font-weight: 500;
-    color: #262626;
+.explore-menu h2 {
+    font-size: max(2vw, 24px);
+    font-weight: 600;
 }
 
 .explore-menu-text {

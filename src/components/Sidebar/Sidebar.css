@@ -2,7 +2,7 @@
     position: absolute;
     width: 200px;
     height: 100vh;
-    background-color: #FF8A65;
+    background-color: #D7540A;
     font-size: 1.2rem;
     z-index: 100;
     transition: transform 0.2s ease-in-out;
@@ -35,6 +35,8 @@
     position: absolute;
     right: 10px;
     top: 10px;
+    color: white;
+    font-size: 2rem;
 }
 
 .active-link {

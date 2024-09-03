@@ -27,7 +27,9 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
 
     return (
         <nav ref={sidebarRef} className={`sidebar ${expand ? 'show-sidebar' : 'hide-sidebar'}`}>
-            <RiCloseLine className='close-btn' onClick={() => setExpand(false)} />
+            <div className='close-btn' onClick={() => setExpand(false)}>
+                <RiCloseLine />
+            </div>
             <ul onClick={() => setExpand(false)}>
                 <li>
                     <NavLink
@@ -61,7 +63,7 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
                         Contact
                     </NavLink>
                 </li>
-                <li onClick={() => setShowLogin(true)}>Sign in</li>
+                <li onClick={() => setShowLogin(true)}>Sign In</li>
             </ul>
         </nav>
     );
