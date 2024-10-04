@@ -25,6 +25,7 @@ const FoodDisplay = () => {
                                 tags={f.tags}
                                 ratings={f.ratings}
                                 dietaryInfo={f.dietary_info}
+                                restaurants={f.restaurants}
                             />
                         ))
                 }

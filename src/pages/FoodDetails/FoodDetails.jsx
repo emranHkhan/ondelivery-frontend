@@ -47,7 +47,10 @@ const FoodDetails = () => {
         setUserRating(0);
     };
 
-    const availableRestaurants = restaurants.map(rs => rs.name)
+    const availableRestaurants = restaurants ? restaurants.map(rs => rs.name) : [];
+
+    console.log(restaurants)
+
 
     useEffect(() => {
         const getReviews = async () => {
