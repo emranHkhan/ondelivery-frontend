@@ -39,6 +39,8 @@
     gap: 100px;
     width: 70%;
     margin: 80px auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .item-info {
@@ -48,17 +50,9 @@
     justify-content: center;
 }
 
-.item-image {
+.item-image img {
     width: 400px;
     height: 400px;
-    overflow: hidden;
-    border-radius: 50%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.item-image img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -113,10 +107,91 @@
     .item-details {
         flex-direction: column;
         margin: 80px 0;
+        width: 100%;
     }
 
     .image-container {
         display: none;
     }
 
+    .item-image img {
+        width: 300px;
+        height: 300px;
+    }
+
+}
+
+/* ... review section styles ... */
+
+.review-section {
+    width: 70%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.review-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star-rating button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.star-rating button.on {
+    color: #ffc107;
+}
+
+.star-rating button.off {
+    color: #ccc;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.submit-review {
+    background-color: tomato;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.submit-review:hover {
+    background-color: #e74c3c;
+}
+
+@media screen and (max-width: 768px) {
+    .review-section {
+        width: 90%;
+    }
 }

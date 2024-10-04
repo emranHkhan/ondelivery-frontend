@@ -1,4 +1,4 @@
-.menu {
+/* .menu {
     margin-top: 30px;
 }
 
@@ -8,6 +8,7 @@
     margin-top: 30px;
     gap: 30px;
     row-gap: 50px;
+    width: 80%;
 }
 
 .menu-search {
@@ -31,9 +32,277 @@
     background-position: right 10px center;
 }
 
+.no-food-found {
+    color: tomato;
+}
+
+.menu-container-inner {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-container-inner aside {
+    margin-top: 30px;
+    width: 20%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.menu-container-inner aside::-webkit-scrollbar {
+    width: 8px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.menu-categories {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: whitesmoke;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-categories img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+    object-fit: cover;
+    display: inline-block;
+}
+
+.menu-categories p {
+    color: gray;
+    font-size: max(1.4vw, 16px);
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.menu-categories:hover {
+    background-color: rgba(255, 99, 71, 0.589);
+}
+
+.menu-categories:hover p {
+    color: white;
+}
+
+.selected-category {
+    background-color: rgba(255, 99, 71, 0.589);
+    color: white;
+}
+
 
 @media (max-width: 750px) {
     .search-icon {
+        width: 100%;
+    }
+} */
+
+.menu {
+    margin-top: 30px;
+}
+
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    margin-top: 30px;
+    gap: 30px;
+    row-gap: 50px;
+    width: 80%;
+}
+
+.menu-search {
+    position: relative;
+}
+
+.search-icon {
+    margin-bottom: 15px;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    outline-color: tomato;
+    margin: 0 auto;
+    display: block;
+}
+
+.search-icon {
+    background: url("../../assets/search_icon.png") no-repeat right;
+    background-size: 20px;
+    background-position: right 10px center;
+}
+
+.no-food-found {
+    color: tomato;
+}
+
+.menu-container-inner {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-container-inner aside {
+    margin-top: 30px;
+    width: 20%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* For Webkit browsers (Chrome, Safari, etc.) */
+.menu-container-inner aside::-webkit-scrollbar {
+    width: 8px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.menu-container-inner aside::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.menu-categories {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: whitesmoke;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-categories img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+    object-fit: cover;
+    display: inline-block;
+}
+
+.menu-categories p {
+    color: gray;
+    font-size: max(1.4vw, 16px);
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.menu-categories:hover {
+    background-color: rgba(255, 99, 71, 0.589);
+}
+
+.menu-categories:hover p {
+    color: white;
+}
+
+.selected-category {
+    background-color: rgba(255, 99, 71, 0.589);
+    color: white;
+}
+
+.toggle-aside {
+    display: none;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: tomato;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-aside {
+    display: none;
+}
+
+@media (max-width: 750px) {
+    .search-icon {
+        width: 100%;
+    }
+
+    .toggle-aside {
+        display: block;
+    }
+
+    .menu-container-inner aside {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        width: 80%;
+        max-width: 300px;
+        min-height: 100vh;
+        margin-top: 0;
+        background-color: white;
+        z-index: 1000;
+        transition: left 0.3s ease-in-out;
+        overflow-y: auto;
+        padding-top: 60px;
+        /* Add space at the top for the close button */
+    }
+
+    .menu-container-inner aside.visible {
+        left: 0;
+    }
+
+    .close-aside {
+        display: block;
+        position: absolute;
+        top: 20px;
+        /* Moved down slightly */
+        right: 20px;
+        /* Moved right slightly */
+        background: none;
+        border: none;
+        font-size: 28px;
+        /* Increased size for better touchability */
+        cursor: pointer;
+        color: tomato;
+        padding: 5px 10px;
+        /* Added padding for a larger touch area */
+    }
+
+    .menu-items {
         width: 100%;
     }
 }

@@ -3,9 +3,12 @@ import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 import { RiCloseLine } from "react-icons/ri";
+import api from '../../utils/axiosInstance';
+import useAuth from '../../hooks/useAuth';
 
 const Sidebar = ({ expand, setExpand, setShowLogin }) => {
     const sidebarRef = useRef(null);
+    const { user, logout } = useAuth()
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -25,16 +28,26 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
         };
     }, [expand, setExpand]);
 
+    const handleLogout = async () => {
+        try {
+            await api.post('logout/')
+            logout()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <nav ref={sidebarRef} className={`sidebar ${expand ? 'show-sidebar' : 'hide-sidebar'}`}>
             <div className='close-btn' onClick={() => setExpand(false)}>
                 <RiCloseLine />
             </div>
-            <ul onClick={() => setExpand(false)}>
+            <ul className='nav-link-container'>
                 <li>
                     <NavLink
                         to="/"
-                        className={({ isActive }) => (isActive ? 'active-link' : '')}
+                        className={({ isActive }) => (isActive ? 'nav-link active-link' : 'nav-link')}
+                        onClick={() => setExpand(false)}
                     >
                         Home
                     </NavLink>
@@ -42,7 +55,8 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
                 <li>
                     <NavLink
                         to="/about"
-                        className={({ isActive }) => (isActive ? 'active-link' : '')}
+                        className={({ isActive }) => (isActive ? 'nav-link active-link' : 'nav-link')}
+                        onClick={() => setExpand(false)}
                     >
                         About
                     </NavLink>
@@ -50,7 +64,8 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
                 <li>
                     <NavLink
                         to="/menu"
-                        className={({ isActive }) => (isActive ? 'active-link' : '')}
+                        className={({ isActive }) => (isActive ? 'nav-link active-link' : 'nav-link')}
+                        onClick={() => setExpand(false)}
                     >
                         Menu
                     </NavLink>
@@ -58,12 +73,18 @@ const Sidebar = ({ expand, setExpand, setShowLogin }) => {
                 <li>
                     <NavLink
                         to="/contact"
-                        className={({ isActive }) => (isActive ? 'active-link' : '')}
+                        className={({ isActive }) => (isActive ? 'nav-link active-link' : 'nav-link')}
+                        onClick={() => setExpand(false)}
                     >
                         Contact
                     </NavLink>
                 </li>
-                <li onClick={() => setShowLogin(true)}>Sign In</li>
+
+                {
+                    user ? <li className='log-out-link' onClick={() => { setExpand(false); handleLogout() }}>Log Out</li> : <li className='sign-in-link' onClick={() => { setExpand(false); setShowLogin(true); }}>Sign In</li>
+                }
+
+
             </ul>
         </nav>
     );

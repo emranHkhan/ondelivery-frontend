@@ -6,7 +6,10 @@ const DataContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const DataProvider = ({ children }) => {
     const [foodItems, setFoodItems] = useState([]);
-    const [cartItems, setCartItems] = useState({})
+    const [cartItems, setCartItems] = useState({});
+    const [restaurants, setRestaruants] = useState([])
+    const [categories, setCategories] = useState([])
+    const [reviews, setReviews] = useState([])
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,8 +18,18 @@ export const DataProvider = ({ children }) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const foodData = await api.get('fooditems/')
+                const [foodData, restaurantsData, categoryData, reviewsData] = await Promise.all([
+                    api.get('fooditems/'),
+                    api.get('restaurants/'),
+                    api.get('categories/'),
+                    api.get('reviews/'),
+                ]);
+
                 setFoodItems(foodData.data);
+                setRestaruants(restaurantsData.data);
+                setCategories(categoryData.data)
+                setReviews(reviewsData.data)
+
             } catch (error) {
                 setError(error);
             } finally {
@@ -66,6 +79,9 @@ export const DataProvider = ({ children }) => {
         removeFromCart,
         getTotalCartAmount,
         foodItems,
+        restaurants,
+        categories,
+        reviews,
         loading,
         error
     }

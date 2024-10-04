@@ -8,14 +8,14 @@ import useAuth from '../../hooks/useAuth'
 import api from '../../utils/axiosInstance'
 import useData from '../../hooks/useData'
 
-const Navbar = ({ setShowLogin, setExpand }) => {
+const Navbar = ({ setShowLogin, setExpand, expand }) => {
     const [scrollToTop, setScrollToTop] = useState(false)
     const { getTotalCartAmount } = useData()
     const { user, logout } = useAuth()
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [scrollToTop]);
+    }, [scrollToTop, expand]);
 
     const handleLogin = () => {
         setShowLogin(true)
@@ -48,6 +48,12 @@ const Navbar = ({ setShowLogin, setExpand }) => {
                     className={({ isActive }) => (isActive ? 'active' : '')}
                 >
                     Menu
+                </NavLink>
+                <NavLink
+                    to="/restaurants"
+                    className={({ isActive }) => (isActive ? 'active' : '')}
+                >
+                    Restaurants
                 </NavLink>
                 <NavLink
                     to="/about"

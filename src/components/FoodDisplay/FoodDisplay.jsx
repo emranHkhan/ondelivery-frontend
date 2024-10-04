@@ -1,9 +1,10 @@
-/* eslint-disable react/prop-types */
 import './FoodDisplay.css'
 import FoodItem from '../FoodItem/FoodItem'
 import useData from '../../hooks/useData'
+import { Link } from 'react-router-dom'
+import { IoIosArrowRoundForward } from "react-icons/io";
 
-const FoodDisplay = ({ category }) => {
+const FoodDisplay = () => {
     const { foodItems } = useData()
 
     return (
@@ -12,7 +13,6 @@ const FoodDisplay = ({ category }) => {
             <div className="food-display-list">
                 {
                     foodItems
-                        .filter(foodItem => category === "" || foodItem.category === category)
                         .map(f => (
                             <FoodItem
                                 key={f.id}
@@ -29,6 +29,13 @@ const FoodDisplay = ({ category }) => {
                         ))
                 }
             </div>
+            <div className="view-all-container">
+                <Link to="/menu" className="view-all-link">
+                    <span>View All Dishes</span>
+                    <IoIosArrowRoundForward className="arrow" />
+                </Link>
+            </div>
+            <hr />
         </div>
     )
 }

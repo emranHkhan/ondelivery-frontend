@@ -30,3 +30,36 @@ a {
     opacity: 1;
   }
 }
+
+.view-all-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background-color: #f0f2f5;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.view-all-link:hover {
+  background-color: #e4e6e9;
+  transform: translateY(-2px);
+}
+
+.view-all-link .arrow {
+  margin-left: 2px;
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.view-all-link:hover .arrow {
+  transform: translateX(2px);
+}

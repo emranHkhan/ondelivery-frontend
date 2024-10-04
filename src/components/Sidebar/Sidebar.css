@@ -1,28 +1,65 @@
+/* Sidebar Styles */
 .sidebar {
     position: absolute;
     width: 200px;
     height: 100vh;
-    background-color: #D7540A;
+    background-color: tomato;
+    /* Primary Color */
     font-size: 1.2rem;
     z-index: 100;
     transition: transform 0.2s ease-in-out;
 }
 
-.sidebar ul {
-    margin-top: 40px;
-}
-
 .sidebar ul li {
     text-align: center;
-    margin: 20px 0;
+    padding: 10px 0;
     color: white;
+    /* Text Color */
+}
+
+.nav-link-container {
+    margin-top: 50px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    /* Text Color */
+    display: block;
     padding: 10px 0;
 }
 
-.sidebar ul li:hover {
-    background-color: rgba(126, 69, 58, 0.651);
+.nav-link:hover {
+    background-color: rgba(211, 211, 211, 0.5);
+    /* Light Gray Hover */
 }
 
+.active-link {
+    background-color: darkslategray;
+    /* Dark Slate Gray for active link */
+    pointer-events: none;
+    /* Disable hover for the active link */
+}
+
+.sign-in-link,
+.log-out-link {
+    text-decoration: none;
+    color: white;
+    /* Text Color */
+    display: block;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.sign-in-link:hover,
+.log-out-link:hover {
+    background-color: rgba(211, 211, 211, 0.5);
+    /* Light Gray Hover */
+}
+
+/* Sidebar Show/Hide Transitions */
 .show-sidebar {
     transform: translateX(0);
 }
@@ -31,16 +68,34 @@
     transform: translateX(-200px);
 }
 
+/* Close Button Styles */
 .close-btn {
     position: absolute;
     right: 10px;
     top: 10px;
     color: white;
-    font-size: 2rem;
+    /* Text Color */
+    font-size: 1.5rem;
+    /* Adjusted Font Size */
+    cursor: pointer;
+    background: darkslategray;
+    /* Background Color */
+    border-radius: 50%;
+    /* Round Shape */
+    width: 40px;
+    /* Fixed Width */
+    height: 40px;
+    /* Fixed Height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    /* Smooth Transition */
 }
 
-.active-link {
-    display: block;
-    padding: 10px 0;
-    background-color: rgba(126, 69, 58, 0.651);
+.close-btn:hover {
+    background: white;
+    /* Hover Background Color */
+    color: tomato;
+    /* Hover Text Color */
 }

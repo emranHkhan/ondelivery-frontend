@@ -14,10 +14,12 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import { AuthProvider } from "./context/AuthContext"
 import { DataProvider } from "./context/DataContext"
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
+import Restaurant from "./pages/Restaurant/Restaurant"
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false)
   const [expand, setExpand] = useState(false)
+  const [category, setCategory] = useState("")
 
   return (
     <>
@@ -26,13 +28,14 @@ const App = () => {
           {showLogin && <LoginPopUp setShowLogin={setShowLogin} />}
           {<Sidebar setExpand={setExpand} setShowLogin={setShowLogin} expand={expand} />}
           <div className="app">
-            <Navbar setShowLogin={setShowLogin} setExpand={setExpand} />
+            <Navbar setShowLogin={setShowLogin} setExpand={setExpand} expand={expand} />
             <ScrollToTop />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home category={category} setCategory={setCategory} />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/order" element={<PlaceOrder />} />
-              <Route path="/menu" element={<Menu />} />
+              <Route path="/menu/:category?" element={<Menu category={category} />} />
+              <Route path="/restaurants" element={<Restaurant />} />
               <Route path="/item/:id" element={<FoodDetails />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />

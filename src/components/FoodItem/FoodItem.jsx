@@ -5,12 +5,12 @@ import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import useData from '../../hooks/useData';
 
-const FoodItem = ({ id, name, price, description, image, ingredients, ratings, tags, dietaryInfo }) => {
+const FoodItem = ({ id, name, price, description, image, ingredients, ratings, tags, dietaryInfo, restaurants }) => {
     const { cartItems, addToCart, removeFromCart } = useData()
     const navigate = useNavigate()
 
     const handleNavigate = () => {
-        navigate(`/item/${id}`, { state: { id, name, price, description, image, ingredients, ratings, tags, dietaryInfo } });
+        navigate(`/item/${id}`, { state: { id, name, price, description, image, ingredients, ratings, tags, dietaryInfo, restaurants } });
     }
 
     return (
@@ -34,7 +34,7 @@ const FoodItem = ({ id, name, price, description, image, ingredients, ratings, t
                     <img src={assets.rating_starts} alt="ratings" />
                 </div>
                 <p className="food-item-description">
-                    {description}
+                    {description.slice(0, 90)}
                 </p>
                 <div className='food-item-details'>
                     <p className='food-item-price'>$ {price}</p>

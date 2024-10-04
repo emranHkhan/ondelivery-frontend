@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './LoginPopUp.css'
 import { assets } from '../../assets/assets'
 import api from '../../utils/axiosInstance'
@@ -13,7 +13,7 @@ const LoginPopUp = ({ setShowLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('user')
-    const [error, setError] = useState('')
+    const [error, setError] = useState([])
     const [success, setSuccess] = useState('')
     const { login } = useAuth()
 
@@ -32,20 +32,30 @@ const LoginPopUp = ({ setShowLogin }) => {
 
         try {
             const response = await api.post(endpoint, data)
+            console.log(response.data)
 
-            console.log(response)
             login(response.data)
 
             setSuccess(currState === 'login' ? 'Login successful' : 'Signup successful')
             if (currState === 'login') {
                 setShowLogin(false)
             }
-            setError('')
+            setError([])
         } catch (err) {
-            setError(err.response?.data?.detail || 'Failed to authenticate')
+            setError(Object.values(err.response.data).flat())
             setSuccess('')
         }
     }
+
+    useEffect(() => {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setFirstName('')
+        setLastName('')
+        setSuccess('')
+        setError([])
+    }, [currState])
 
     return (
         <div className='login-popup'>
@@ -55,7 +65,11 @@ const LoginPopUp = ({ setShowLogin }) => {
                     <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="" />
                 </div>
                 <div>
-                    {error && <p className="error-message">{error}</p>}
+                    {
+                        error.map(e => {
+                            return <p key={e} className="error-message">{e}</p>
+                        })
+                    }
                     {success && <p className="success-message">{success}</p>}
                 </div>
                 <div className="login-popup-inputs">

@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
 import './ExploreMenu.css'
 import useData from '../../hooks/useData'
+import { Link } from 'react-router-dom'
+import { IoIosArrowRoundForward } from 'react-icons/io'
 
-const ExploreMenu = ({ category, setCategory }) => {
-    const { foodItems } = useData()
-
-    const categories = Array.from(new Set(foodItems.map(item => item.category))).slice(0, 8).map(category => {
-        const item = foodItems.find(item => item.category === category);
-        return { category: item.category, image_url: item.image_url };
-    });
+const ExploreMenu = ({ setCategory }) => {
+    const { categories } = useData()
 
     return (
         <div className='explore-menu' id='explore-menu'>
@@ -20,13 +17,19 @@ const ExploreMenu = ({ category, setCategory }) => {
                 {
                     categories.map((cat) => {
                         return (
-                            <div key={cat.category} onClick={() => setCategory(prev => prev === cat.category ? "" : cat.category)} className='explore-menu-list-item'>
-                                <img src={cat.image_url} alt={cat.name} className={category === cat.category ? "active" : ""} />
-                                <p>{cat.category}</p>
-                            </div>
+                            <Link to={`/menu/${cat.name}`} key={cat.name} className='explore-menu-list-item' onClick={() => setCategory(cat.name)}>
+                                <img src={cat.image_url} alt={cat.name} />
+                                <p>{cat.name}</p>
+                            </Link>
                         )
                     })
                 }
+            </div>
+            <div className="view-all-container">
+                <Link to="/menu" className="view-all-link">
+                    <span>View All Categories</span>
+                    <IoIosArrowRoundForward className="arrow" />
+                </Link>
             </div>
             <hr />
         </div>
