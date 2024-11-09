@@ -75,20 +75,18 @@
 
 .place-order-right input {
     margin-bottom: 5px;
-    /* Adjust spacing for error message */
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #c5c5c5;
     border-radius: 4px;
     outline-color: tomato;
 }
 
-.place-order-right .multi-fields {
+/* .place-order-right .multi-fields {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
-    /* Adjust spacing for error message */
-}
+} */
 
 .place-order-left {
     width: 100%;
@@ -115,16 +113,70 @@ form button:hover {
     color: white;
 }
 
+.card-element-container {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: white;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+    width: 80%;
+}
+
+.card-element-container:focus-within {
+    box-shadow: 0 0 0 2px #80bdff;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.submit-button {
+    width: 80%;
+    padding: 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+
+.submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.sign-in-message {
+    display: block;
+    text-align: center;
+    color: red;
+    margin-top: 30px;
+    font-size: 1.5rem;
+}
+
 .error {
     color: red;
     font-size: 0.875rem;
-    /* Smaller font size for error messages */
     margin-top: 2px;
-    /* Space between input and error message */
 }
 
 @media(max-width:750px) {
     .place-order {
         flex-direction: column;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+
+    .card-element-container {
+        width: 100%;
+    }
+
+    .place-order-right input {
+        width: 100%;
     }
 }

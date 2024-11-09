@@ -34,7 +34,7 @@
     text-transform: capitalize;
 }
 
-.item-details {
+.food-item-details {
     display: flex;
     gap: 100px;
     width: 70%;
@@ -43,18 +43,19 @@
     justify-content: center;
 }
 
-.item-info {
+.food-item-info {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
     justify-content: center;
 }
 
-.item-image img {
+.food-item-image img {
     width: 400px;
     height: 400px;
     object-fit: cover;
     border-radius: 50%;
+    display: block;
 }
 
 .item-name {

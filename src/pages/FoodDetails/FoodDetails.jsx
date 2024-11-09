@@ -27,13 +27,11 @@ const FoodDetails = () => {
         e.preventDefault();
 
         try {
-            const res = await api.post('reviews/', {
+            await api.post('reviews/', {
                 comment: reviewText,
                 rating: userRating,
                 food_item: id
             })
-
-            console.log(res)
 
             setsuccess('Review successfully submitted.')
 
@@ -49,7 +47,6 @@ const FoodDetails = () => {
 
     const availableRestaurants = restaurants ? restaurants.map(rs => rs.name) : [];
 
-    console.log(restaurants)
 
 
     useEffect(() => {
@@ -70,11 +67,11 @@ const FoodDetails = () => {
                     <div className="image-text">{name}</div>
                 </div>
             </div>
-            <div className="item-details">
-                <div className='item-image'>
+            <div className="food-item-details">
+                <div className='food-item-image'>
                     <img src={image} alt="" />
                 </div>
-                <div className='item-info'>
+                <div className='food-item-info'>
                     <h3 className='item-name'>{name}</h3>
                     <p className='item-dietary-info'>{dietaryInfo.join(', ')}</p>
                     <div className='restaurants-item'>

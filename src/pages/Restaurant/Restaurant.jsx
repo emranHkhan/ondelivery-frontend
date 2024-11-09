@@ -6,7 +6,7 @@ const Restaurant = () => {
 
     return (
         <>
-            <h2 style={{ margin: '20px 0', color: 'tomato' }}>Restaurants</h2>
+            <h2 style={{ margin: '20px 0' }}>Restaurants</h2>
             <div className="restaurants">
                 {
                     restaurants.map(r => <RestaurantCard key={r.id} {...r} />)

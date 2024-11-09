@@ -1,62 +1,128 @@
-/* Sidebar Styles */
-.sidebar {
-    position: absolute;
-    width: 200px;
-    height: 100vh;
-    background-color: tomato;
-    /* Primary Color */
-    font-size: 1.2rem;
-    z-index: 100;
-    transition: transform 0.2s ease-in-out;
+/* Modern Sidebar Styles */
+:root {
+    --tomato-50: #fff5f3;
+    --tomato-100: #ffe6e2;
+    --tomato-200: #ffd1c8;
+    --tomato-300: #ffb3a7;
+    --tomato-400: #ff8a75;
+    --tomato-500: #ff6347;
+    /* Original Tomato */
+    --tomato-600: #ff4726;
+    --tomato-700: #e63a1f;
+    --tomato-800: #cc2d15;
+    --tomato-900: #a62714;
 }
 
-.sidebar ul li {
-    text-align: center;
-    padding: 10px 0;
-    color: white;
-    /* Text Color */
+.sidebar {
+    position: fixed;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--tomato-400) 0%, var(--tomato-600) 100%);
+    font-size: 1rem;
+    z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--tomato-400) var(--tomato-800);
+}
+
+/* Sidebar Scrollbar */
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--tomato-800);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--tomato-400);
+    border-radius: 20px;
 }
 
 .nav-link-container {
-    margin-top: 50px;
+    margin-top: 80px;
+    padding: 0 1.5rem;
+}
+
+.sidebar ul li {
+    margin: 8px 0;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .nav-link {
     text-decoration: none;
-    color: white;
-    /* Text Color */
+    color: var(--tomato-100);
     display: block;
-    padding: 10px 0;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--tomato-500), var(--tomato-600));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+    border-radius: 12px;
+}
+
+.nav-link:hover::before {
+    opacity: 1;
 }
 
 .nav-link:hover {
-    background-color: rgba(211, 211, 211, 0.5);
-    /* Light Gray Hover */
+    transform: translateX(6px);
+    color: white;
 }
 
 .active-link {
-    background-color: darkslategray;
-    /* Dark Slate Gray for active link */
-    pointer-events: none;
-    /* Disable hover for the active link */
+    background: linear-gradient(135deg, var(--tomato-500), var(--tomato-600));
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 99, 71, 0.2);
 }
 
 .sign-in-link,
 .log-out-link {
     text-decoration: none;
-    color: white;
-    /* Text Color */
+    color: var(--tomato-100);
     display: block;
-    padding: 10px 0;
+    padding: 1rem 1.5rem;
     text-align: center;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 2rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    background: transparent;
+    border: 2px solid var(--tomato-500);
 }
 
 .sign-in-link:hover,
 .log-out-link:hover {
-    background-color: rgba(211, 211, 211, 0.5);
-    /* Light Gray Hover */
+    background: var(--tomato-500);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 99, 71, 0.2);
+}
+
+.log-out-link {
+    border-color: var(--tomato-700);
+}
+
+.log-out-link:hover {
+    background: var(--tomato-700);
 }
 
 /* Sidebar Show/Hide Transitions */
@@ -65,37 +131,72 @@
 }
 
 .hide-sidebar {
-    transform: translateX(-200px);
+    transform: translateX(-100%);
 }
 
 /* Close Button Styles */
 .close-btn {
     position: absolute;
-    right: 10px;
-    top: 10px;
-    color: white;
-    /* Text Color */
-    font-size: 1.5rem;
-    /* Adjusted Font Size */
+    right: 1.5rem;
+    top: 1.5rem;
+    color: var(--tomato-100);
     cursor: pointer;
-    background: darkslategray;
-    /* Background Color */
-    border-radius: 50%;
-    /* Round Shape */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
     width: 40px;
-    /* Fixed Width */
     height: 40px;
-    /* Fixed Height */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
-    /* Smooth Transition */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .close-btn:hover {
-    background: white;
-    /* Hover Background Color */
-    color: tomato;
-    /* Hover Text Color */
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+    color: white;
+}
+
+.close-btn svg {
+    font-size: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 260px;
+    }
+
+    .nav-link-container {
+        margin-top: 70px;
+    }
+
+    .nav-link,
+    .sign-in-link,
+    .log-out-link {
+        padding: 0.875rem 1.25rem;
+    }
+}
+
+/* Optional: Add a backdrop when sidebar is open */
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(166, 39, 20, 0.4);
+    /* Using tomato-900 with opacity */
+    backdrop-filter: blur(4px);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
 }

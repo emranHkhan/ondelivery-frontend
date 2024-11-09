@@ -4,25 +4,39 @@ import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import api from '../../utils/axiosInstance';
 import PaymentSuccess from '../../components/PaymentSuccess/PaymentSuccess';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 const DELIVERY_FEE = 2;
+
+const CARD_ELEMENT_OPTIONS = {
+    style: {
+        base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#aab7c4'
+            },
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    }
+};
+
 
 const PlaceOrder = () => {
     const { getTotalCartAmount, cartItems, foodItems, setCartItems } = useData();
     const { user } = useAuth();
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
     const [errors, setErrors] = useState({});
-
-    const cartDetails = Object.keys(cartItems).map(id => {
-        const item = foodItems.find(food => food.id === parseInt(id));
-        return {
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            image_url: item.image_url,
-            quantity: cartItems[id]
-        };
-    });
+    const stripe = useStripe();
+    const elements = useElements();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [cardError, setCardError] = useState(null)
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -35,6 +49,20 @@ const PlaceOrder = () => {
         zipCode: '',
         country: ''
     });
+
+    const modifiedCart = Object.keys(cartItems).map(key => ({
+        id: +key,
+        quantity: cartItems[key]
+    }));
+
+    const payload = modifiedCart
+        .map(cartItem => {
+            const foodItem = foodItems.find(item => item.id === cartItem.id);
+            return foodItem ? { ...foodItem, quantity: cartItem.quantity } : null;
+        })
+        .filter(item => item !== null);
+
+    const total = payload.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,36 +87,85 @@ const PlaceOrder = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!validateForm()) {
+            return;
+        }
+        if (!stripe || !elements) {
+            setError('Stripe has not been initialized.');
+            return;
+        }
+        setLoading(true);
+        setError(null);
 
-        if (!validateForm()) return;
-
-        const address = {
+        const orderData = {
+            total_amount: total,
+            items: payload.map(product => ({
+                food_item: product.id,
+                quantity: product.quantity
+            })),
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
             street: formData.street,
             city: formData.city,
             state: formData.state,
-            zip_code: formData.zipCode,
+            zipCode: formData.zipCode,
             country: formData.country
         };
 
-        const order = {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            email: formData.email,
-            phone: formData.phone,
-            address: address,
-            subtotal: getTotalCartAmount(),
-            delivery_amount: DELIVERY_FEE,
-            items: cartDetails,
-        };
-
         try {
-            await api.post('orders/', order);
+            const orderResponse = await api.post('/orders/create/', orderData);
+            const { client_secret, order_id } = orderResponse.data;
+
+            const cardElement = elements.getElement(CardElement);
+
+            if (!cardElement) {
+                setError('Card information is not properly entered.');
+                setLoading(false);
+                return;
+            }
+
+            const result = await stripe.confirmCardPayment(client_secret, {
+                payment_method: {
+                    card: cardElement,
+                },
+            });
+
+            if (result.error) {
+                setError(result.error.message);
+                setLoading(false);
+                return;
+            }
+
+            const confirmResponse = await api.post('/orders/confirm-payment/', {
+                order_id: order_id,
+                payment_intent_id: result.paymentIntent.id,
+            });
+
+            const confirmedOrder = confirmResponse.data;
+            console.log('Order confirmed:', confirmedOrder);
             setShowSuccessMsg(true);
-            setCartItems({})
+            setCartItems({});
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                street: '',
+                city: '',
+                state: '',
+                zipCode: '',
+                country: ''
+            });
+            setLoading(false);
+
         } catch (error) {
-            console.error('Error:', error);
+            setError(error.response?.data?.error || 'An error occurred during checkout');
+            console.error('Checkout error:', error);
+            setLoading(false);
         }
     };
 
@@ -113,7 +190,6 @@ const PlaceOrder = () => {
                                 <b>Total</b>
                                 <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + DELIVERY_FEE}</b>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -216,17 +292,52 @@ const PlaceOrder = () => {
                             />
                             {errors.phone && <p className="error">{errors.phone}</p>}
                         </div>
+
                         {!user ? (
                             <strong style={{ fontSize: '1.5rem', textAlign: 'center', display: 'block', marginTop: '30px', color: 'red' }}>
                                 Please Sign In To Pay
                             </strong>
-                        ) : <button type="submit">PROCEED TO PAYMENT</button>}
+                        ) :
+                            <>
+                                <div className="card-element-container">
+                                    <CardElement
+                                        options={CARD_ELEMENT_OPTIONS}
+                                        onChange={(event) => {
+                                            if (event.error) {
+                                                setCardError(event.error.message);
+                                            } else {
+                                                setCardError(null);
+                                            }
+                                        }}
+                                    />
+                                    {cardError && (
+                                        <div className="error-message">
+                                            {cardError}
+                                        </div>
+                                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={!stripe || !elements || loading}
+                                    className="submit-button"
+                                >
+                                    {loading ? 'Processing...' : 'Place Order'}
+                                </button>
+                                {error && (
+                                    <div className="error-message">
+                                        {error}
+                                    </div>
+                                )}
+                            </>
+                        }
                     </form>
                 </div>
             </div>
-            {showSuccessMsg && <PaymentSuccess />}
+            {showSuccessMsg && (
+                <PaymentSuccess />
+            )}
         </>
     );
-}
+};
 
 export default PlaceOrder;

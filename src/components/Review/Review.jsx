@@ -5,8 +5,6 @@ import './Review.css'
 const Review = () => {
     const { reviews } = useData()
 
-    console.log(reviews)
-
     return (
         <div className="reviews">
             <h2>Reviews</h2>

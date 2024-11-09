@@ -38,9 +38,6 @@ const Menu = () => {
         setIsAsideVisible(false);
     };
 
-    console.log(filteredFoodList)
-
-
     return (
         <div className='menu' id='menu'>
             <input
@@ -60,7 +57,7 @@ const Menu = () => {
                     <button className="close-aside" onClick={() => setIsAsideVisible(false)}>
                         &times;
                     </button>
-                    <div>
+                    <div className='food-categories'>
                         {categories.map(cat => (
                             <div
                                 onClick={() => handleCategoryClick(cat.name)}
